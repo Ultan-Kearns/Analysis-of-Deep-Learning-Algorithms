@@ -14,7 +14,7 @@
 \graphicspath{ {./Images/} }
 
 \usepackage{biblatex} %Imports biblatex package
-
+\addbibresource{bibliography.bib}
  
 \title{
 Analysis of The Performance Deep Learning Algorithms In Video Games\\
@@ -23,7 +23,9 @@ Analysis of The Performance Deep Learning Algorithms In Video Games\\
 \vspace{3mm} 
 \large Letterkenny Institute of Technology \\
 \vspace{3mm} 
-\large Artificial Intelligence 2
+\large Artificial Intelligence 2 \\
+\vspace{3mm} 
+\large Lecturer: Shagufta Henna
 }
 \author{By Ultan Kearns}
 \date{\today}
@@ -62,12 +64,40 @@ In this game the Agent will control a paddle which can move either left or right
 The goal of this game is to hit a ball using the paddle which is controlled by the Agent to break a series of blocks without letting the ball fall beyond the paddle.  The Agent also has a score which it will try to maximize by breaking as many blocks as possible, as the game progresses the Agent's paddle will get smaller and the balls velocity will increase making the game harder for the Agent.  The Agent will have three lives to break all the blocks in the environment, the max possible score in Breakout is 896 which we will use as a metric when judging the Agent's performance.
 \section{Algorithms Used for Deep Learning}
 \subsection{Deep Q Learning(DQN)}
-Traditional Q Learning works by maintaining a table with each state, this method works fine for environments with a small number of states however when working with a higher number of states we opt to use Deep Q Learning.  DQN differs from traditional Q Learning by using an Artificial Neural Network(ANN) which has the advantage of reducing the amount of memory utilized as DQN learns over time(iterations) and discovers commonalities between states.  This means that DQN doesn't require having to store every state the agent could be in memory, however the model does take time to train and increasing the number of iterations will increase the time it will take to train.
-\subsection{Advantage Actor-Critic}
+Traditional Q Learning works by maintaining a table with each state, this method works fine for environments with a small number of states however when working with a higher number of states we opt to use Deep Q Learning. 
+\\
+\\
+DQN differs from traditional Q Learning by using an Artificial Neural Network(ANN) which has the advantage of reducing the amount of memory utilized as DQN learns over time(iterations) and discovers commonalities between states.  
+\\
+\\
+This means that DQN doesn't require having to store every state the agent could be in memory, however the model does take time to train and increasing the number of iterations will increase the time it will take to train.
+
+\subsection{Asynchronous Advantage Actor-Critic A3C}
+The Asynchronous Advantage Actor Critic algorithm utilizes a Deep Neural Network(DNN) to train the Agent to perform certain tasks using Reinforcement Learning\cite{A3CAsyncPaper}. Essentially this algorithm works by implementing an Actor(our Agent) and a Critic which will be used to evaluate the agents performance in the given environment.  It is in this way that the Agent can learn through Reinforcement Learning as the Actor will try to maximize it's score and the critic will use value based functions to determine if the Actor could be performing better.
+\\
+\\
+This algorithm trains multiple agents in parallel on multiple environments each with their own weights, it is in this way that the Agent can experience more states and actions in less time.  The results of these Agents are then combined and used as inputs to train a single Agent or what is termed "Global Network"\cite{A3CAiSummer}.  Using a neural network we can train the Agents to approximate the best state \& the best actions when playing the game.
+\\
+\\
+Our Agent will be trained using a Deep Neural Network so that it can approximate the best action to take for a given state.
+
 \subsection{Reinforcement Learning}
+
+The premise of reinforcement learning is as follows: 
+\\
+\begin{itemize}
+    \item The Agent Performs Task(T) for a given State(S)
+    \item The performance of the agent is then evaluated at which point we have two options:
+    \begin{enumerate}
+        \item Reward the agent if the performance is beneficial to them
+        \item "Punish the agent if their performance is undesirable
+    \end{enumerate}
+\end{itemize}
+
+The way we "reward" or "punish" an agent can be done in a variety of ways usually by utilizing a cost function which will either increase an agents score for a desirable action or punish them for an undesirable one.
+
 \section{Results of Algorithms}
-\subsection{Performance of Algorithms}
-\subsubsection{DQN For Cartpole}
+\subsection{DQN For Cartpole}
 When using DQN for the CartPole game I found that the agents Average Return plateaued over time.  When training the agent I first started by seeing if an increase in the number of iterations would have much of an effect on the Average Return.  I started by increasing the number of iterations from 20,000 to 30,000 and assessed the results which I will show below.
 \begin{figure}[h]
 \caption{Average return for Agent with 20,000 training iterations}
@@ -86,9 +116,27 @@ We can see from the figure above that the performance is not improving much afte
 \includegraphics[width=0.5\textwidth]{Images/DQN50k.png}
 \end{figure}
 I also decided to see what effect training for 50k iterations would have, as we can see from the image below the performance actually decreases when after a certain number of iterations has been reached.  
+\subsubsection{Adjusting Hyper-Parameters}
+\subsubsection{Final Results}
 
-\subsubsection{Actor Action Critique}
+\subsection{Actor Action Critic(A3C)}
+
+\subsubsection{Adjusting Hyper-Parameters}
+
+\subsection{Reinforcement-Learning Breakout}
+\subsubsection{Adjusting Hyper-Parameters}
+\subsubsection{Final Results}
+
+\subsection{Reinforcement-Learning Breakout}
+\subsubsection{Adjusting Hyper-Parameters}
+\subsubsection{Final Results}
 
 \subsection{Pros \& Cons}
+\subsubsection{DQN}
+\subsubsection{A3C}
+\subsubsection{Reinforcment Learning}
 \section{Conclusion}
+
+\newpage
+\printbibliography
 \end{document}
