@@ -34,7 +34,7 @@ Analysis of The Performance Deep Learning Algorithms In Video Games\\
 
 \maketitle
 \begin{abstract}
-    This paper aims to analyze deep learning algorithms and methodologies by utilizing an AI(Artificial Intelligence) Agent to perform specified tasks in simulated environments.  For the purpose of this paper I will be analyzing the Agents performance in video games and will be weighing the pros and cons of each algorithm in respect to the Agent's performance.  Each game has a specific goal for the Agent to complete and the Agent's performance will be evaluated based on certain goals and objectives present in each game discussed in this paper. 
+    This paper aims to analyze deep learning algorithms and methodologies by utilizing an AI(Artificial Intelligence) Agent to perform specified tasks in simulated environments.  For the purpose of this paper I will be analyzing the Agents performance in video games and will be weighing the pros and cons of each algorithm in respect to the Agent's performance.  Each game has a specific goal for the Agent to complete and the Agent's performance will be evaluated based on certain goals and objectives present in each game discussed in this paper.  I will then analyze the performance of the Agent for each specified environment and determine the strengths and weaknesses of each deep learning methodology used to train the Agent. 
     \\
     \\
     Key Words: AI, Deep Learning, Games
@@ -42,6 +42,9 @@ Analysis of The Performance Deep Learning Algorithms In Video Games\\
 \section{Introduction}
 \subsection{Purpose of Paper}
 The purpose of this paper is to compare and contrast different deep learning methods and algorithms with respect to an AI Agent.  In the upcoming sections I will be documenting the training of the Agent which will be trained to perform certain tasks within a given environment, the environment being the game.  I will evaluate the Agent's performance by reviewing their actions during the game and judging if these actions were desirable or undesirable.  The overall purpose of this paper is to determine how the Agent can maximize it's performance in the given environment and to explore which algorithm will produce the best results for a given environment as well as provide an analysis of said algorithms.
+\\
+\\
+In the upcoming sections I will analyze the performance of each algorithm and investigate if the Agent's performance can be improved using these algorithms by adjusting the hyper-parameters for each model.
 \subsection{History of AI Use in Video Games}
 
 \subsection{Deep Learning}
@@ -71,7 +74,29 @@ DQN differs from traditional Q Learning by using an Artificial Neural Network(AN
 \\
 \\
 This means that DQN doesn't require having to store every state the agent could be in memory, however the model does take time to train and increasing the number of iterations will increase the time it will take to train.
-
+\\
+DQN utilizes an optimal action-value function defined by the following equation:\[Q*(s,a)=max_\pi\epsilon[r_t + \gamma r_t+1 + r_t+2 .....]\]\cite{DQNPaper} 
+\begin{itemize}
+    \item Where Q is our agent
+    \item S is our state
+    \item A is the action
+    \item r is the reward
+    \item t is the time step 
+    \item and $\gamma$ is our discount value
+\end{itemize}
+essentially we are approximating the best course of action for our Agent's given state, in using this function we can approximate the best course of action for our Agent to take given it's current state.
+\\
+We also use a loss function defined by the following equation for each iteration: \[L_i(\theta_i)=\epsilon_(s,a,r,s')[(r+\gamma*max_a'Q(s',a';\theta_i) - Q(s,a;\theta_i))^2]\]\cite{DQNPaper}
+\begin{itemize}
+    \item Where L is our loss
+    \item i is given iteration
+    \item s is our state
+    \item r is our reward
+    \item $\gamma$ is our discount factor
+    \item Q is our agent
+    \item $\theta_i$ is our given iteration
+\end{itemize}
+Using this loss function we calculate the output of our Agent compared to the actual target value so we can determine how well our agent is performing at a given iteration.
 \subsection{Asynchronous Advantage Actor-Critic A3C}
 The Asynchronous Advantage Actor Critic algorithm utilizes a Deep Neural Network(DNN) to train the Agent to perform certain tasks using Reinforcement Learning\cite{A3CAsyncPaper}. Essentially this algorithm works by implementing an Actor(our Agent) and a Critic which will be used to evaluate the agents performance in the given environment.  It is in this way that the Agent can learn through Reinforcement Learning as the Actor will try to maximize it's score and the critic will use value based functions to determine if the Actor could be performing better.
 \\
@@ -98,7 +123,7 @@ The way we "reward" or "punish" an agent can be done in a variety of ways usuall
 
 \section{Results of Algorithms}
 \subsection{DQN For Cartpole}
-When using DQN for the CartPole game I found that the agents Average Return plateaued over time.  When training the agent I first started by seeing if an increase in the number of iterations would have much of an effect on the Average Return.  I started by increasing the number of iterations from 20,000 to 30,000 and assessed the results which I will show below.
+When using DQN for the CartPole game I found that the agents Average Return plateaued over time for our given hyper-parameters.  When training the agent I first started by seeing if an increase in the number of iterations would have much of an effect on the Average Return.  I started by increasing the number of iterations from 20,000 to 30,000 and assessed the results which I will show below.
 \begin{figure}[h]
 \caption{Average return for Agent with 20,000 training iterations}
 \centering
@@ -116,6 +141,19 @@ We can see from the figure above that the performance is not improving much afte
 \includegraphics[width=0.5\textwidth]{Images/DQN50k.png}
 \end{figure}
 I also decided to see what effect training for 50k iterations would have, as we can see from the image below the performance actually decreases when after a certain number of iterations has been reached.  
+\subsubsection{Hyper Parameters Used}
+The above results were achieved using the following hyper parameters:
+\begin{itemize}
+    \item Number of iterations: 20,000
+    \item Initial Random Steps: 1,000
+    \item Steps per Iteration: 1
+    \item Data Storage for Training: 100000
+    \item Batch Size: 64
+    \item Learning Rate: 1-e3
+    \item Log Interval: 200
+    \item Evaluation Episodes: 10
+    \item Evaluation Interval: 1000
+\end{itemize}
 \subsubsection{Adjusting Hyper-Parameters}
 \subsubsection{Final Results}
 
