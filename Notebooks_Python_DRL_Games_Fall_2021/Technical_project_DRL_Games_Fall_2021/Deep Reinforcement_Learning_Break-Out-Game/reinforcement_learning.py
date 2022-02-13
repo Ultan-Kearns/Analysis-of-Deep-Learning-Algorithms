@@ -563,7 +563,7 @@ class ReplayMemory:
     is more diverse when sampled over thousands of different states.
     """
 
-    def __init__(self, size, num_actions, discount_factor=0.97):
+    def __init__(self, size, num_actions, discount_factor=0.14):
         """
         
         :param size:
@@ -1184,13 +1184,13 @@ class NeuralNetwork:
 
         # First convolutional layer.
         net = tf.layers.conv2d(inputs=net, name='layer_conv1',
-                               filters=16, kernel_size=3, strides=2,
+                               filters=16, kernel_size=3, strides=1,
                                padding=padding,
                                kernel_initializer=init, activation=activation)
 
         # Second convolutional layer.
         net = tf.layers.conv2d(inputs=net, name='layer_conv2',
-                               filters=32, kernel_size=3, strides=2,
+                               filters=32, kernel_size=3, strides=1,
                                padding=padding,
                                kernel_initializer=init, activation=activation)
 
@@ -1205,11 +1205,11 @@ class NeuralNetwork:
         net = tf.layers.flatten(net)
 
         # First fully-connected (aka. dense) layer.
-        net = tf.layers.dense(inputs=net, name='layer_fc1', units=1024,
+        net = tf.layers.dense(inputs=net, name='layer_fc1', units=512,
                               kernel_initializer=init, activation=activation)
 
         # Second fully-connected layer.
-        net = tf.layers.dense(inputs=net, name='layer_fc2', units=1024,
+        net = tf.layers.dense(inputs=net, name='layer_fc2', units=512,
                               kernel_initializer=init, activation=activation)
 
         # Third fully-connected layer.
@@ -1613,7 +1613,7 @@ class Agent:
             # Each pixel is 1 byte, so this replay-memory needs more than
             # 3 GB RAM (105 x 80 x 2 x 200000 bytes).
 
-            self.replay_memory = ReplayMemory(size=200000,
+            self.replay_memory = ReplayMemory(size=350000,
                                               num_actions=self.num_actions)
         else:
             self.replay_memory = None
